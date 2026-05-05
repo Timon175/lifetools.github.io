@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weiterleitung...</title>
+</head>
+<body>
+
+<script>
+// 🔍 Produkt aus URL holen
+var params = new URLSearchParams(window.location.search);
+var product = params.get("p");
+
+// 🌍 Sprache erkennen
+var lang = navigator.language || "";
+
+// 🔑 Deine Affiliate IDs
+var tagDE = "DEINNAME-21";
+var tagUS = "DEINNAME-20";
+var tagUK = "DEINNAME-21";
+
+// 📦 Produkte (ASINs eintragen!)
+var products = {
+  "1": "ASIN1",
+  "2": "ASIN2"
+};
+
+// 🔗 Link Builder
+function build(domain, asin, tag) {
+  return "https://" + domain + "/dp/" + asin + "/?tag=" + tag;
+}
+
+// 🚀 Weiterleitung
+if (products[product]) {
+
+  var asin = products[product];
+  var url;
+
+  if (lang.includes("de")) {
+    url = build("amazon.de", asin, tagDE);
+
+  } else if (lang.includes("en-GB")) {
+    url = build("amazon.co.uk", asin, tagUK);
+
+  } else {
+    url = build("amazon.com", asin, tagUS);
+  }
+
+  window.location.href = url;
+
+} else {
+  document.body.innerHTML = "Produkt nicht gefunden.";
+}
+</script>
+
+</body>
+</html>
